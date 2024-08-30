@@ -10,6 +10,7 @@ import env from "dotenv";
 const app = express();
 const port = 3000;
 const saltRound=10;
+const { Pool } = pg;
 env.config
 ();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +37,6 @@ const db = new pg.Client({
   port:process.env.PG_PORT,
 });
 db.connect();
-
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
