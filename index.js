@@ -10,7 +10,6 @@ import env from "dotenv";
 const app = express();
 const port = 3000;
 const saltRound=10;
-const { Pool } = pg;
 env.config
 ();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,13 +29,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const db = new pg.Client({
-  user:process.env.PG_USER,
-  host:process.env.PG_HOST,
-  database:process.env.PG_DATABASE,
-  password:process.env.PG_PASSWORD,
-  port:process.env.PG_PORT,
+  connectionString: process.env.POSTGRES_URL,
 });
 db.connect();
+
+
 
 app.get("/", (req, res) => {
   res.render("index.ejs");
